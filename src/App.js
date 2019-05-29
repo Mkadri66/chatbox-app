@@ -4,12 +4,22 @@ import './App.css'
 // Import components
 import Formulaire from './components/Formulaire'
 import Message from './components/Message'
+ 
+// Import firebase
+import base from './base'
 
 class App extends Component {
   state = {
     messages: {},
     // Pseudo récuperé depuis l'URL 
     pseudo: this.props.match.params.pseudo
+  }
+
+  componentDidMount(){
+    base.syncState('/',{
+      context: this,
+      state: 'messages'
+    })
   }
 
   addMessage = (message) => {
@@ -20,7 +30,6 @@ class App extends Component {
   }
   render () {
    
-    
     const messages = Object
     .keys(this.state.messages)
     .map(key => (
